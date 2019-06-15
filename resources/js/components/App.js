@@ -10,6 +10,7 @@ class App extends Component {
         // bind
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.renderTasks = this.renderTasks.bind(this);
     }
     // handle change
     handleChange(e) {
@@ -27,11 +28,23 @@ class App extends Component {
             })
             .then(response => {
                // console.log('from handle submit', response);
-                this.setState = ({
+                this.setState({
                     tasks: [response.data, ...this.state.tasks],
                     name: ''
                 });
             });
+    }
+    // render tasks
+    renderTasks() {
+        return this.state.tasks.map(task => {
+            <div key={task.id} className="media">
+                <div className="media-body">
+                    <div>
+                        {task.name}
+                    </div>
+                </div>
+            </div>
+        });
     }
 
     render() {
@@ -56,6 +69,8 @@ class App extends Component {
                                     </div>
                                     <button type="submit" className="btn btn-primary">Create task</button>
                                 </form>
+                                <hr/>
+                                {this.renderTasks()}
                             </div>
                         </div>
                     </div>
